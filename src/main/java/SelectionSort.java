@@ -6,6 +6,7 @@ import java.util.Comparator;
 public class SelectionSort {
 
     public static <T> void sort(T[] a, Comparator<T> com){
+        // Sort a[] into increasing order.
         int n = a.length;
         for(int i = 0; i < n ; i++){
             for(int j = i+1; j < n; j ++){
