@@ -1,7 +1,7 @@
 import java.util.Comparator;
 
 /**
- * Created by suchuan on 2017-04-12.
+ * Insertion Sort
  */
 
 public class InsertionSort {
