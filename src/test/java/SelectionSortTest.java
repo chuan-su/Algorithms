@@ -15,11 +15,11 @@ public class SelectionSortTest {
     public void SelectionSort() {
 
         String[] a = {"Z","F","E","B","H"};
-        Comparator<String> com = (s1,s2) -> s1.compareTo(s2);
+        final Comparator<String> com = (s1,s2) -> s1.compareTo(s2);
         SelectionSort.sort(a,com);
 
         Stream.of(a).reduce((prev, curr) -> {
-            assertTrue(prev.compareTo(curr) < 0);
+            assertTrue(com.compare(prev,curr) < 0);
             return curr;
         });
     }
