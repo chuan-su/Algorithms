@@ -45,7 +45,7 @@ public class ArrayList<E>
                             newSize - index);
         elementData[size = newSize] = null;
     }
-    
+
     private Object[] grow() {
         return elementData = Arrays.copyOf(elementData,newCapacity(size + 1));
     }
