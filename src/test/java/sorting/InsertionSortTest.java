@@ -1,4 +1,7 @@
+package sorting;
+
 import org.junit.Test;
+import sorting.InsertionSort;
 
 import java.util.Comparator;
 import java.util.stream.Stream;

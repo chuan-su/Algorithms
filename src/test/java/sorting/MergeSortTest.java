@@ -1,6 +1,8 @@
-import org.junit.Test;
+package sorting;
 
-import java.util.Comparator;
+import org.junit.Test;
+import sorting.MergeSort;
+
 import java.util.stream.Stream;
 
 import static org.junit.Assert.assertTrue;
