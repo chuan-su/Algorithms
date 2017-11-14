@@ -1,10 +1,11 @@
-package collection;
+package util;
 
 import java.util.Arrays;
 
 public class ArrayList<E>
     implements java.io.Serializable
 {
+    private static final long serialVersionUID = 1L;
 
     private static final Object[] DEFAULTCAPACITY_EMPTY_ELEMENTDATA = {};
 
