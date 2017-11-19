@@ -47,6 +47,30 @@ public class ArrayList<E>
         elementData[size = newSize] = null;
     }
 
+    public boolean remove(Object o) {
+        final Object[] elementData = this.elementData;
+        final int size = this.size;
+        int i = 0;
+        found: {
+            if (o == null) {
+                for (; i < size; i++)
+                    if(elementData[i] == null)
+                        break found;
+            }else {
+                for (; i < size; i++)
+                    if(o.equals(elementData[i]))
+                        break found;
+            }
+            return false;
+        }
+        remove(i);
+        return true;
+    }
+
+    public int size() {
+        return this.size;
+    }
+
     private Object[] grow() {
         return elementData = Arrays.copyOf(elementData,newCapacity(size + 1));
     }
