@@ -7,6 +7,23 @@ import java.util.Optional;
 public class Collections {
   private Collections() {}
 
+  public static <T>
+  void reverse(List<T> list) {
+    int low = 0;
+    int high = list.size() -1 ;
+    while(low < high) {
+      swap(list, low, high);
+      low ++;
+      high --;
+    }
+  }
+
+  /* recursive approach */
+  public static <T>
+  void reverseRecursive(List<T> list) {
+    reverseRange(list, 0, list.size() - 1);
+  }
+
   /* JDK source code */
   public static <T>
   int indexedBinarySearchJDK(List<? extends T> l, T key, Comparator<? super T> c) {
@@ -35,7 +52,7 @@ public class Collections {
   }
 
   private static <T> int indexedBinarySearch(List<T> list, T key, Comparator<T> comp, int low, int high) {
-    if(high - low <= 0) return -1;
+    if(low > high) return -1;
 
     int mid = (high + low) >>> 1;
     int result = comp.compare(key, list.get(mid));
@@ -46,6 +63,19 @@ public class Collections {
       return indexedBinarySearch(list, key, comp, low, mid -1);
     else
       return mid;
+  }
+
+  private static <T> void reverseRange(List<T> list, int low, int high) {
+    if(low < high) {
+      swap(list, low, high);
+      reverseRange(list, low+1, high -1);
+    }
+  }
+
+  private static <T> void swap(List<T> list, int i, int j) {
+    T tmp = list.get(i);
+    list.set(i, list.get(j));
+    list.set(j, tmp);
   }
 
   /* return search result direct */
