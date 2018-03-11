@@ -1,49 +1,41 @@
 package sorting;
 
-import java.util.Arrays;
-import java.util.stream.Stream;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 
-/**
- * Created by Inserve on 13/04/17.
- */
 public class MergeSort {
+  private MergeSort(){}
 
-    private static Comparable[] aux;
+  public static <T>
+  void mergeSort(List<T> elements, Comparator<T> comp) {
+    int size = elements.size(), mid = size >> 1;
 
-    public static void sort(Comparable[] a){
-        aux = new Comparable[a.length];
-        sort(a,0,a.length-1);
+    if (mid == 0) return;
+
+    List<T> subl1 = new ArrayList<>(mid);
+    List<T> subl2 = new ArrayList<>(elements.size() - mid);
+
+    int i = 0;
+    while (i < mid) {
+      subl1.add(elements.remove(0));
+      i++;
     }
+    while (!elements.isEmpty()) subl2.add(elements.remove(0));
 
-    private static void sort(Comparable[] a, int lo, int hi)
-    {  // Sort a[lo..hi].
-        if (hi <= lo) return;
-        int mid = lo + (hi - lo)/2;
-        sort(a, lo, mid);       // Sort left half.
-        sort(a, mid+1, hi);     // Sort right half.
-        merge(a, lo, mid, hi);  // Merge results (code on page 271).
+    mergeSort(subl1, comp);
+    mergeSort(subl2, comp);
+    merge(subl1, subl2, elements, comp);
+  }
+
+  private static <T> void merge(List<T> subl1, List<T> subl2, List<T> l, Comparator<T> comp) {
+    while (!subl1.isEmpty() && !subl2.isEmpty()) {
+      if(comp.compare(subl1.get(0), subl2.get(0)) <= 0)
+        l.add(subl1.remove(0));
+      else
+        l.add(subl2.remove(0));
     }
-
-    public static void merge(Comparable[] a, int lo, int mid, int hi)
-    {  // Merge a[lo..mid] with a[mid+1..hi].
-
-        for (int k = lo; k <= hi; k++)  // Copy a[lo..hi] to aux[lo..hi].
-            aux[k] = a[k];
-
-        int i = lo, j = mid+1;
-        Stream.of(a).forEach(System.out::print);
-        System.out.println();
-        System.out.println(" " + mid);
-
-        for (int k = lo; k <= hi; k++)  // Merge back to a[lo..hi].
-            if      (i > mid)              a[k] = aux[j++];
-            else if (j > hi )              a[k] = aux[i++];
-            else if (a[j].compareTo(a[i]) <= 0){
-                a[k] = aux[j++];
-            }
-            else{
-                a[k] = aux[i++];
-            }
-    }
-
+    while (!subl1.isEmpty()) l.add(subl1.remove(0));
+    while (!subl2.isEmpty()) l.add(subl2.remove(0));
+  }
 }
