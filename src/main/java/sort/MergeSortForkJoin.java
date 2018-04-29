@@ -10,9 +10,9 @@ public class MergeSortForkJoin<T> {
 
   private MergeSortForkJoin() {}
 
-  public static <T> void sort(List<T> elements, Comparator<T> comparator) {
+  public static <T> void
+  sort(List<T> elements, Comparator<T> comparator) {
     ForkJoinPool pool = ForkJoinPool.commonPool();
-
     pool.invoke(new MergeSortTask<T>(elements, comparator));
   }
 
@@ -28,9 +28,9 @@ public class MergeSortForkJoin<T> {
     @Override
     protected void compute() {
       int size = elements.size(), mid = size >> 1;
-
       if (mid == 0) return;
 
+      // Divide into 2 sublists
       List<T> subl1 = new ArrayList<>();
       List<T> subl2 = new ArrayList<>();
 
@@ -39,8 +39,10 @@ public class MergeSortForkJoin<T> {
 
       while (!elements.isEmpty())
         subl2.add(elements.remove(0));
-
-      RecursiveAction.invokeAll(new MergeSortTask<>(subl1, comparator), new MergeSortTask<>(subl2, comparator));
+      // Fork
+      RecursiveAction
+        .invokeAll(new MergeSortTask<>(subl1, comparator), new MergeSortTask<>(subl2, comparator));
+      // Join
       merge(subl1, subl2);
     }
 
