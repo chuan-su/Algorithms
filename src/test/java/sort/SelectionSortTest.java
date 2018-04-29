@@ -9,17 +9,16 @@ import java.util.stream.Stream;
 import static org.junit.Assert.*;
 
 public class SelectionSortTest {
-
-    @Test
-    public void SelectionSort() {
-
-        String[] a = {"Z","F","E","B","H"};
-        final Comparator<String> com = (s1,s2) -> s1.compareTo(s2);
-        SelectionSort.sort(a,com);
-
-        Stream.of(a).reduce((prev, curr) -> {
-            assertTrue(com.compare(prev,curr) < 0);
-            return curr;
-        });
-    }
+  @Test
+  public void SelectionSort() {
+    // Given
+    String[] a = {"Z","F","E","B","H"};
+    // When
+    SelectionSort.sort(a, String::compareTo);
+    // Then
+    Stream.of(a).reduce((prev, curr) -> {
+      assertTrue(prev.compareTo(curr) < 0);
+      return curr;
+    });
+  }
 }
