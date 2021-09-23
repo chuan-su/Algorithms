@@ -39,7 +39,7 @@ public class Test {
     String[] query = {"ander"};
     List<Name> names = List.of(new Name("anders", "andersson"), new Name("anders", "anderhanson"), new Name("Chuan niklas", "istenes"));
 
-    FILTER_AND_RANK: for (Name name : names) {
+    RANKING: for (Name name : names) {
       String[] tokens = Stream
         .of(name.firstName, name.lastName)
         .flatMap(token -> Pattern.compile(" ").splitAsStream(token))
@@ -52,7 +52,7 @@ public class Test {
       int maxLength = name.firstName.length() + name.lastName.length();
       Arrays.fill(minIdxes, maxLength);
 
-      for (int i = 0; i < matrix.length; i ++) {
+      FILTER: for (int i = 0; i < matrix.length; i ++) {
         boolean matched = false;
         for (int j = 0; j < matrix[i].length; j++) {
           int matchPosition = tokens[j].indexOf(query[i]);
@@ -62,7 +62,7 @@ public class Test {
           matrix[i][j] = matchPosition;
         }
         if (!matched) {
-          continue FILTER_AND_RANK;
+          continue RANKING;
         }
       }
 
